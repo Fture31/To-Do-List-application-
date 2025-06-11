@@ -1,6 +1,6 @@
 <div class="container">
   <p>To-Do List</p>
-  <button routerLink="/add" class="btn btn-dark">Ajouter</button>
+  <button *ngIf="role === 'admin'" routerLink="/add" class="btn btn-dark">Ajouter</button>
 
   <table class="table">
     <thead>
@@ -8,7 +8,7 @@
         <th>Titre</th>
         <th>Description</th>
         <th>Date de création</th>
-        <th>Actions</th>
+        <th *ngIf="role === 'admin'">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +17,8 @@
         <td>{{tache.description}}</td>
         <td>{{tache.created_at}}</td>
         <td>
-          <button (click)="update(tache.id_tache)" class="btn btn-primary">Modifier</button>
-          <button (click)="delete(tache.id_tache)" class="btn btn-danger">Supprimer</button>
+          <button *ngIf="role === 'admin'" (click)="update(tache.id)" class="btn btn-primary">Modifier</button>
+          <button *ngIf="role === 'admin'" (click)="delete(tache.id)" class="btn btn-danger">Supprimer</button>
         </td>
       </tr>
     </tbody>

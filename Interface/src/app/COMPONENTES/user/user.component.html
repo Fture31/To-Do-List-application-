@@ -1,58 +1,76 @@
-<div class="user-form">
-  <h2 *ngIf="isLogin">Connexion</h2>
-  <h2 *ngIf="!isLogin">Inscription</h2>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="min-width: 400px;">
+    <h2 class="text-center mb-4">
+      {{ isLogin ? 'Connexion' : 'Inscription' }}
+    </h2>
 
-<form (submit)="isLogin ? login() : register(); $event.preventDefault()">
+    <form (submit)="isLogin ? login() : register(); $event.preventDefault()">
 
-  <!-- Nom uniquement pour inscription -->
-  <div *ngIf="!isLogin">
-    <label>Nom</label>
-    <input type="text" [(ngModel)]="registerData.name" name="name" required />
+      <!-- Champ Nom pour l'inscription -->
+      <div *ngIf="!isLogin" class="mb-3">
+        <label for="name" class="form-label">Nom complet</label>
+        <input type="text" [(ngModel)]="registerData.name" name="name" id="name" class="form-control" required />
+      </div>
+
+      <!-- Champ Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Adresse email</label>
+        <input
+          type="email"
+          *ngIf="isLogin"
+          [(ngModel)]="user.email"
+          name="email"
+          id="email"
+          class="form-control"
+          required
+        />
+        <input
+          type="email"
+          *ngIf="!isLogin"
+          [(ngModel)]="registerData.email"
+          name="registerEmail"
+          id="registerEmail"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <!-- Champ Mot de passe -->
+      <div class="mb-4">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input
+          type="password"
+          *ngIf="isLogin"
+          [(ngModel)]="user.password"
+          name="password"
+          id="password"
+          class="form-control"
+          required
+        />
+        <input
+          type="password"
+          *ngIf="!isLogin"
+          [(ngModel)]="registerData.password"
+          name="registerPassword"
+          id="registerPassword"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <!-- Bouton de soumission -->
+      <div class="d-grid mb-3">
+        <button type="submit" class="btn btn-primary">
+          {{ isLogin ? 'Se connecter' : 'S\'inscrire' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Lien pour basculer entre login et inscription -->
+    <p class="text-center">
+      <a href="#" (click)="toggleForm(); $event.preventDefault()" class="text-decoration-none">
+        {{ isLogin ? 'Créer un compte' : 'J\'ai déjà un compte' }}
+      </a>
+    </p>
   </div>
-
-  <!-- Email -->
-  <label>Email</label>
-  <input
-    type="email"
-    *ngIf="isLogin"
-    [(ngModel)]="user.email"
-    name="email"
-    required
-  />
-  <input
-    type="email"
-    *ngIf="!isLogin"
-    [(ngModel)]="registerData.email"
-    name="registerEmail"
-    required
-  />
-
-  <!-- Mot de passe -->
-  <label>Mot de passe</label>
-  <input
-    type="password"
-    *ngIf="isLogin"
-    [(ngModel)]="user.password"
-    name="password"
-    required
-  />
-  <input
-    type="password"
-    *ngIf="!isLogin"
-    [(ngModel)]="registerData.password"
-    name="registerPassword"
-    required
-  />
-
-  <button type="submit">
-    {{ isLogin ? 'Se connecter' : 'S\'inscrire' }}
-  </button>
-</form>
-
-
-  <p>
-    <a href="#" (click)="toggleForm(); $event.preventDefault()">
-      {{ isLogin ? 'Créer un compte' : 'J\'ai déjà un compte' }}
-    </a>
-  </p>
 </div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TacheService, Tache} from '../../SERVICES/tache.service';
 import { Router} from '@angular/router';
-
+import{ AuthService } from '../../SERVICES/auth.service'; // Assurez-vous que AuthService est importé correctement
+ // Assurez-vous que cette fonction est correctement importée
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -11,11 +12,21 @@ export class ListComponent implements OnInit {
 
   //varibale
   ListarTache: Tache[];
+  role: string | null = null;
 
-  constructor(private TacheService:TacheService, private router:Router) { }
+ 
+
+ constructor(
+  private TacheService: TacheService,
+  private router: Router,
+  private authService: AuthService
+) {}
+
 
   ngOnInit(): void {
+    this.role = this.authService.getUserRole();
     this.listarTache();
+    
   }
 
 
@@ -23,7 +34,6 @@ export class ListComponent implements OnInit {
   {
     this.TacheService.getTaches().subscribe(
       res=>{
-        console.log(res);
         this.ListarTache=<any>res;
       },
       err => console.log(err)
@@ -35,7 +45,6 @@ export class ListComponent implements OnInit {
   {
     this.TacheService.deleteTache(id).subscribe(
       res=>{
-        console.log('Tache eliminado');
         this.listarTache();
       },
       err=> console.log(err)

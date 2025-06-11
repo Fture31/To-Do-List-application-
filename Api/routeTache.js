@@ -162,14 +162,19 @@ router.post('/', authenticateToken,
         body('description').notEmpty()
     ],
     (req, res) => {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ erreur: 'Accès interdit' });
+        }
+
         const { title, description } = req.body;
         const sql = 'INSERT INTO tb_article (title, description, user_id) VALUES (?, ?, ?)';
         conexion.query(sql, [title, description, req.user.id], (err, result) => {
             if (err) return res.status(500).json({ erreur: 'Erreur serveur' });
-            res.json({ message: 'Article ajouté', id: result.insertId });
+            res.json({ message: 'Tâche ajoutée', id: result.insertId });
         });
     }
 );
+
 
 
 /**
@@ -199,35 +204,27 @@ router.post('/', authenticateToken,
  *       404:
  *         description: tache non trouvé
  */
-router.put('/:id',
+router.put('/:id', authenticateToken,
     [
-        body('title').notEmpty().withMessage('Le titre est requis.'),
-        body('description').notEmpty().withMessage('La description est requise.')
+        body('title').notEmpty(),
+        body('description').notEmpty()
     ],
     (req, res) => {
-        const erreurs = validationResult(req);
-        if (!erreurs.isEmpty()) {
-            return res.status(400).json({ erreurs: erreurs.array() });
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ erreur: 'Accès interdit' });
         }
 
         const { id } = req.params;
         const { title, description } = req.body;
-
-        const sql = `
-            UPDATE tb_article 
-            SET title = ?, description = ?, updated_at = CURRENT_TIMESTAMP 
-            WHERE id = ?`;
+        const sql = 'UPDATE tb_article SET title = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
         conexion.query(sql, [title, description, id], (err, result) => {
-            if (err) {
-                res.status(500).json({ erreur: 'Erreur serveur' });
-            } else if (result.affectedRows === 0) {
-                res.status(404).json({ erreur: 'Article non trouvé' });
-            } else {
-                res.json({ status: 'Article modifié' });
-            }
+            if (err) return res.status(500).json({ erreur: 'Erreur serveur' });
+            if (result.affectedRows === 0) return res.status(404).json({ erreur: 'Tâche non trouvée' });
+            res.json({ message: 'Tâche modifiée' });
         });
     }
 );
+
 
 /**
  * @swagger
@@ -249,18 +246,19 @@ router.put('/:id',
  *       404:
  *         description: tache non trouvé
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticateToken, (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ erreur: 'Accès interdit' });
+    }
+
     const { id } = req.params;
     const sql = 'DELETE FROM tb_article WHERE id = ?';
     conexion.query(sql, [id], (err, result) => {
-        if (err) {
-            res.status(500).json({ erreur: 'Erreur serveur' });
-        } else if (result.affectedRows === 0) {
-            res.status(404).json({ erreur: 'Article non trouvé' });
-        } else {
-            res.json({ status: 'Article supprimé' });
-        }
+        if (err) return res.status(500).json({ erreur: 'Erreur serveur' });
+        if (result.affectedRows === 0) return res.status(404).json({ erreur: 'Tâche non trouvée' });
+        res.json({ message: 'Tâche supprimée' });
     });
 });
+
 
 module.exports = router;

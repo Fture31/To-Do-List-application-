@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 export class AddComponent implements OnInit {
 
   tache: Tache={
-    id_tache:'',
+    id:'',
     title: '',
     description: '',
     created_at:''
@@ -21,7 +21,7 @@ export class AddComponent implements OnInit {
   }
 
 add() {
-  delete this.tache.id_tache;
+  delete this.tache.id;
   this.TacheService.addTache(this.tache).subscribe(
     res => {
       console.log('Tâche ajoutée');

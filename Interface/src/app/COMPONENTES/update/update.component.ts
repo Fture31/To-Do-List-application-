@@ -11,7 +11,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 export class UpdateComponent implements OnInit {
 
   tache: Tache={
-    id_tache:'',
+    id:'',
     title: '',
     description: '',
     created_at:''
@@ -36,7 +36,7 @@ export class UpdateComponent implements OnInit {
   }
 
 update() {
-  this.TacheService.editTache(this.tache.id_tache, this.tache).subscribe(
+  this.TacheService.editTache(this.tache.id, this.tache).subscribe(
     res => {
       console.log('Tâche mise à jour');
       this.router.navigate(['/list']); // redirection vers la liste

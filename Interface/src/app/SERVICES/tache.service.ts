@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Tache {
-  id_tache?: string;
+  id?: string;
   title: string;
   description: string;
   created_at?: string;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,23 +18,30 @@ export class TacheService {
 
   constructor(private http: HttpClient) {}
 
-  getTaches() {
-    return this.http.get<Tache[]>(`${this.API_URI}`);
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
   }
 
-  getUnTache(id: string) {
-    return this.http.get<Tache>(`${this.API_URI}/${id}`);
+  getTaches(): Observable<Tache[]> {
+    return this.http.get<Tache[]>(this.API_URI, { headers: this.getAuthHeaders() });
   }
 
-  addTache(tache: Tache) {
-    return this.http.post(`${this.API_URI}`, tache);
+  getUnTache(id: string): Observable<Tache> {
+    return this.http.get<Tache>(`${this.API_URI}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  deleteTache(id: string) {
-    return this.http.delete(`${this.API_URI}/${id}`);
+  addTache(tache: Tache): Observable<any> {
+    return this.http.post(`${this.API_URI}`, tache, { headers: this.getAuthHeaders() });
   }
 
-  editTache(id: string, updatedTache: Tache) {
-    return this.http.put(`${this.API_URI}/${id}`, updatedTache);
+  deleteTache(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URI}/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  editTache(id: string, updatedTache: Tache): Observable<any> {
+    return this.http.put(`${this.API_URI}/${id}`, updatedTache, { headers: this.getAuthHeaders() });
   }
 }

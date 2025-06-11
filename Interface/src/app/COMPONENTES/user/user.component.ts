@@ -29,7 +29,7 @@ export class UserComponent {
     this.http.post('http://localhost:3000/auth/login', this.user).subscribe({
       next: (res: any) => {
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/listall']); // rediriger après connexion
+        this.router.navigate(['/listall']); 
       },
       error: (err) => {
         alert('Échec de la connexion');
@@ -37,6 +37,8 @@ export class UserComponent {
       }
     });
   }
+
+
 
 register() {
   console.log('Données envoyées au backend (inscription):', this.registerData);
@@ -52,5 +54,6 @@ register() {
     }
   });
 }
+
 
 }
