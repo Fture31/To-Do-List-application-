@@ -1,0 +1,58 @@
+<div class="user-form">
+  <h2 *ngIf="isLogin">Connexion</h2>
+  <h2 *ngIf="!isLogin">Inscription</h2>
+
+<form (submit)="isLogin ? login() : register(); $event.preventDefault()">
+
+  <!-- Nom uniquement pour inscription -->
+  <div *ngIf="!isLogin">
+    <label>Nom</label>
+    <input type="text" [(ngModel)]="registerData.name" name="name" required />
+  </div>
+
+  <!-- Email -->
+  <label>Email</label>
+  <input
+    type="email"
+    *ngIf="isLogin"
+    [(ngModel)]="user.email"
+    name="email"
+    required
+  />
+  <input
+    type="email"
+    *ngIf="!isLogin"
+    [(ngModel)]="registerData.email"
+    name="registerEmail"
+    required
+  />
+
+  <!-- Mot de passe -->
+  <label>Mot de passe</label>
+  <input
+    type="password"
+    *ngIf="isLogin"
+    [(ngModel)]="user.password"
+    name="password"
+    required
+  />
+  <input
+    type="password"
+    *ngIf="!isLogin"
+    [(ngModel)]="registerData.password"
+    name="registerPassword"
+    required
+  />
+
+  <button type="submit">
+    {{ isLogin ? 'Se connecter' : 'S\'inscrire' }}
+  </button>
+</form>
+
+
+  <p>
+    <a href="#" (click)="toggleForm(); $event.preventDefault()">
+      {{ isLogin ? 'Créer un compte' : 'J\'ai déjà un compte' }}
+    </a>
+  </p>
+</div>

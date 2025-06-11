@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EquipoService, Article} from '../../SERVICES/equipo.service';
+import {TacheService, Tache} from '../../SERVICES/tache.service';
 import { Router} from '@angular/router';
 
 @Component({
@@ -10,21 +10,21 @@ import { Router} from '@angular/router';
 export class ListComponent implements OnInit {
 
   //varibale
-  ListarEquipo: Article[];
+  ListarTache: Tache[];
 
-  constructor(private EquipoService:EquipoService, private router:Router) { }
+  constructor(private TacheService:TacheService, private router:Router) { }
 
   ngOnInit(): void {
-    this.listarEquipo();
+    this.listarTache();
   }
 
 
-  listarEquipo()
+  listarTache()
   {
-    this.EquipoService.getEquipos().subscribe(
+    this.TacheService.getTaches().subscribe(
       res=>{
         console.log(res);
-        this.ListarEquipo=<any>res;
+        this.ListarTache=<any>res;
       },
       err => console.log(err)
     );
@@ -33,10 +33,10 @@ export class ListComponent implements OnInit {
 
   delete(id:string)
   {
-    this.EquipoService.deleteEquipo(id).subscribe(
+    this.TacheService.deleteTache(id).subscribe(
       res=>{
-        console.log('equipo eliminado');
-        this.listarEquipo();
+        console.log('Tache eliminado');
+        this.listarTache();
       },
       err=> console.log(err)
       );

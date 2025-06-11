@@ -24,7 +24,7 @@ const SECRET_KEY = 'begade';
  *               - password
  *               - role
  *             properties:
- *               nom:
+ *               name:
  *                 type: string
  *                 example: Jean Dupont
  *               email:
@@ -37,8 +37,8 @@ const SECRET_KEY = 'begade';
  *                 example: motdepasse123
  *               role:
  *                 type: string
- *                 enum: [admin, utilisateur]
- *                 example: utilisateur
+ *                 format: string
+ *                 example: admin ou user
  *     responses:
  *       200:
  *         description: Utilisateur inscrit avec succès
@@ -58,29 +58,30 @@ const SECRET_KEY = 'begade';
 
 
 router.post('/register',
-    [
-        body('nom').notEmpty(),
-        body('email').isEmail(),
-        body('password').isLength({ min: 6 }),
-        body('role').isIn(['admin', 'utilisateur'])
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  [
+    body('name').notEmpty(),
+    body('email').isEmail(),
+    body('password').isLength({ min: 6 }),
+    body('role').optional().isIn(['admin', 'utilisateur'])
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-        const { nom, password, role } = req.body;
-        const email = req.body.email.trim();
+    const { name, password } = req.body;
+    const email = req.body.email.trim();
+    const role = req.body.role || 'utilisateur';  // Valeur par défaut
 
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const sql = 'INSERT INTO users (nom, email, password, role) VALUES (?, ?, ?, ?)';
-        conexion.query(sql, [nom, email, password, role], (err, result) => {
-            if (err) return res.status(500).json({ erreur: 'Erreur serveur ou email déjà utilisé' });
-            res.json({ message: 'Utilisateur inscrit avec succès' });
-        });
-    }
+    const sql = 'INSERT INTO users (nom, email, password, role) VALUES (?, ?, ?, ?)';
+    conexion.query(sql, [name, email, password, role], (err, result) => {
+      if (err) return res.status(500).json({ erreur: 'Erreur serveur ou email déjà utilisé' });
+      res.json({ message: 'Utilisateur inscrit avec succès' });
+    });
+  }
 );
+
 /**
  * @swagger
  * /auth/login:

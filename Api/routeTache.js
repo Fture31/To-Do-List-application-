@@ -15,18 +15,18 @@ const { body, validationResult } = require('express-validator');
  *       scheme: bearer
  *       bearerFormat: JWT
  *   schemas:
- *     Article:
+ *     tache:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
- *           description: ID unique de l'article
+ *           description: ID unique de l'z
  *         title:
  *           type: string
- *           description: Titre de l'article
+ *           description: Titre de l'tache
  *         description:
  *           type: string
- *           description: Contenu ou résumé de l'article
+ *           description: Contenu ou résumé de l'tache
  *         created_at:
  *           type: string
  *           format: date-time
@@ -36,7 +36,7 @@ const { body, validationResult } = require('express-validator');
  *           format: date-time
  *           description: Date de mise à jour
  *
- *     ArticleInput:
+ *     tacheInput:
  *       type: object
  *       required:
  *         - title
@@ -48,7 +48,7 @@ const { body, validationResult } = require('express-validator');
  *           example: Titre exemple
  *         description:
  *           type: string
- *           example: Contenu de l'article
+ *           example: Contenu de l'tache
  *         Nom:
  *           type: string
  *           example: nom 
@@ -57,27 +57,27 @@ const { body, validationResult } = require('express-validator');
 /**
  * @swagger
  * tags:
- *   name: Articles
- *   description: API de gestion des articles
+ *   name: taches
+ *   description: API de gestion des taches
  */
 
 /**
  * @swagger
  * /api:
  *   get:
- *     summary: Obtenir tous les articles
+ *     summary: Obtenir tous les taches
  *     security:
  *       - bearerAuth: []  
- *     tags: [Articles]
+ *     tags: [taches]
  *     responses:
  *       200:
- *         description: Liste des articles récupérée avec succès.
+ *         description: Liste des taches récupérée avec succès.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Article'
+ *                 $ref: '#/components/schemas/tache'
  */
 
 router.get('/', authenticateToken, (req, res) => {
@@ -103,26 +103,26 @@ router.get('/', authenticateToken, (req, res) => {
  * @swagger
  * /api/{id}:
  *   get:
- *     summary: Obtenir un article par ID
+ *     summary: Obtenir un tache par ID
  *     security:
  *       - bearerAuth: []  
- *     tags: [Articles]
+ *     tags: [taches]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID de l'article
+ *         description: ID de l'tache
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Article trouvé
+ *         description: tache trouvé
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Article'
+ *               $ref: '#/components/schemas/tache'
  *       404:
- *         description: Article non trouvé
+ *         description: tache non trouvé
  */
 router.get('/:id', (req, res) => {
     const { id } = req.params;
@@ -142,19 +142,19 @@ router.get('/:id', (req, res) => {
  * @swagger
  * /api:
  *   post:
- *     summary: Ajouter un nouvel article
+ *     summary: Ajouter un nouvel tache
  *     security:
  *       - bearerAuth: []  
- *     tags: [Articles]
+ *     tags: [taches]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ArticleInput'
+ *             $ref: '#/components/schemas/tacheInput'
  *     responses:
  *       200:
- *         description: Article ajouté avec succès
+ *         description: tache ajouté avec succès
  */
 router.post('/', authenticateToken,
     [
@@ -176,15 +176,15 @@ router.post('/', authenticateToken,
  * @swagger
  * /api/{id}:
  *   put:
- *     summary: Modifier un article existant
+ *     summary: Modifier un tache existant
  *     security:
  *       - bearerAuth: []  
- *     tags: [Articles]
+ *     tags: [taches]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID de l'article
+ *         description: ID de l'tache
  *         schema:
  *           type: integer
  *     requestBody:
@@ -192,12 +192,12 @@ router.post('/', authenticateToken,
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ArticleInput'
+ *             $ref: '#/components/schemas/tacheInput'
  *     responses:
  *       200:
- *         description: Article modifié avec succès
+ *         description: tache modifié avec succès
  *       404:
- *         description: Article non trouvé
+ *         description: tache non trouvé
  */
 router.put('/:id',
     [
@@ -233,10 +233,10 @@ router.put('/:id',
  * @swagger
  * /api/{id}:
  *   delete:
- *     summary: Supprimer un article
+ *     summary: Supprimer un tache
  *     security:
  *       - bearerAuth: []  
- *     tags: [Articles]
+ *     tags: [taches]
  *     parameters:
  *       - in: path
  *         name: id
@@ -245,9 +245,9 @@ router.put('/:id',
  *           type: integer
  *     responses:
  *       200:
- *         description: Article supprimé avec succès
+ *         description: tache supprimé avec succès
  *       404:
- *         description: Article non trouvé
+ *         description: tache non trouvé
  */
 router.delete('/:id', (req, res) => {
     const { id } = req.params;

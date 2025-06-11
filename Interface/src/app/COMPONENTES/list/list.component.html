@@ -12,13 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let article of ListarEquipo">
-        <td>{{article.title}}</td>
-        <td>{{article.description}}</td>
-        <td>{{article.created_at}}</td>
+      <tr *ngFor="let tache of ListarTache">
+        <td>{{tache.title}}</td>
+        <td>{{tache.description}}</td>
+        <td>{{tache.created_at}}</td>
         <td>
-          <button (click)="update(article.id_article)" class="btn btn-primary">Modifier</button>
-          <button (click)="delete(article.id_article)" class="btn btn-danger">Supprimer</button>
+          <button (click)="update(tache.id_tache)" class="btn btn-primary">Modifier</button>
+          <button (click)="delete(tache.id_tache)" class="btn btn-danger">Supprimer</button>
         </td>
       </tr>
     </tbody>

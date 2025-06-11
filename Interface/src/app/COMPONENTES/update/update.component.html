@@ -1,0 +1,22 @@
+<div class="container">
+  <p>Modifier une Tâche</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <form #form="ngForm" (ngSubmit)="update()">
+        <div class="mb-3">
+          <label class="form-label">Nom de la Tâche</label>
+          <input [(ngModel)]="tache.title" type="text" class="form-control" name="title">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <input [(ngModel)]="tache.description" type="text" class="form-control" name="description">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Date</label>
+          <input [(ngModel)]="tache.created_at" type="text" class="form-control" name="created_at">
+        </div>
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+      </form>
+    </div>
+  </div>
+</div>

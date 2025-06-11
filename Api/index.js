@@ -18,9 +18,9 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Gestion des Articles',
+      title: 'API Gestion des taches',
       version: '1.0.0',
-      description: 'API pour la gestion des articles avec Express, MySQL et Swagger',
+      description: 'API pour la gestion des tache avec Express, MySQL et Swagger',
     },
     servers: [
       {
