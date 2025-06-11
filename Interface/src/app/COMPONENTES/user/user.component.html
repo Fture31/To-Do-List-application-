@@ -6,13 +6,10 @@
 
     <form (submit)="isLogin ? login() : register(); $event.preventDefault()">
 
-      <!-- Champ Nom pour l'inscription -->
       <div *ngIf="!isLogin" class="mb-3">
         <label for="name" class="form-label">Nom complet</label>
         <input type="text" [(ngModel)]="registerData.name" name="name" id="name" class="form-control" required />
       </div>
-
-      <!-- Champ Email -->
       <div class="mb-3">
         <label for="email" class="form-label">Adresse email</label>
         <input
@@ -34,8 +31,6 @@
           required
         />
       </div>
-
-      <!-- Champ Mot de passe -->
       <div class="mb-4">
         <label for="password" class="form-label">Mot de passe</label>
         <input
@@ -58,7 +53,6 @@
         />
       </div>
 
-      <!-- Bouton de soumission -->
       <div class="d-grid mb-3">
         <button type="submit" class="btn btn-primary">
           {{ isLogin ? 'Se connecter' : 'S\'inscrire' }}
@@ -66,7 +60,6 @@
       </div>
     </form>
 
-    <!-- Lien pour basculer entre login et inscription -->
     <p class="text-center">
       <a href="#" (click)="toggleForm(); $event.preventDefault()" class="text-decoration-none">
         {{ isLogin ? 'Créer un compte' : 'J\'ai déjà un compte' }}

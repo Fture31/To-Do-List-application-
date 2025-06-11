@@ -39,7 +39,7 @@ update() {
   this.TacheService.editTache(this.tache.id, this.tache).subscribe(
     res => {
       console.log('Tâche mise à jour');
-      this.router.navigate(['/list']); // redirection vers la liste
+      this.router.navigate(['/list']); 
     },
     err => console.log(err)
   );

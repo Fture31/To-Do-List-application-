@@ -70,7 +70,7 @@ router.post('/register',
 
     const { name, password } = req.body;
     const email = req.body.email.trim();
-    const role = req.body.role || 'utilisateur';  // Valeur par défaut
+    const role = req.body.role || 'utilisateur';  
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

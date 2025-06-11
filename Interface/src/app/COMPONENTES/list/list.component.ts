@@ -10,7 +10,6 @@ import{ AuthService } from '../../SERVICES/auth.service'; // Assurez-vous que Au
 })
 export class ListComponent implements OnInit {
 
-  //varibale
   ListarTache: Tache[];
   role: string | null = null;
 

@@ -25,7 +25,7 @@ add() {
   this.TacheService.addTache(this.tache).subscribe(
     res => {
       console.log('Tâche ajoutée');
-      this.router.navigate(['/list']); // rediriger vers la liste après ajout
+      this.router.navigate(['/list']); 
     },
     err => console.error(err)
   );

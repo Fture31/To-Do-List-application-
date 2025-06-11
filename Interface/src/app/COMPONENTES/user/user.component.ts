@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
-  isLogin = true; // pour basculer entre login et register
+  isLogin = true; 
   user = {
     email: '',
     password: ''
