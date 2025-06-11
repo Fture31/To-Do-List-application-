@@ -1,0 +1,26 @@
+<div class="container">
+  <p>To-Do List</p>
+  <button routerLink="/add" class="btn btn-dark">Ajouter</button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Date de création</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of ListarEquipo">
+        <td>{{article.title}}</td>
+        <td>{{article.description}}</td>
+        <td>{{article.created_at}}</td>
+        <td>
+          <button (click)="update(article.id_article)" class="btn btn-primary">Modifier</button>
+          <button (click)="delete(article.id_article)" class="btn btn-danger">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
