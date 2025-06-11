@@ -1,4 +1,4 @@
-git import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface Article {
@@ -17,7 +17,7 @@ export class EquipoService {
   constructor(private http: HttpClient) {}
 
   getEquipos() {
-    return this.http.get<Article[]>(`${this.API_URI}`); // anciennement /articles
+    return this.http.get<Article[]>(`${this.API_URI}`);
   }
 
   getUnEquipo(id: string) {
